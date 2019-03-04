@@ -1,0 +1,22 @@
+I did the extra credit, so PLEASE give me credit for it. I'm getting 150/100 when running the autograder.
+
+Data Structures (cBlock):
+
+I created a structure of my own called cBlock, which represented a block. It contained a tag, which was used to identify it, a valid bit which was initialized to 0 and then changed to 1 upon access, and linkCount which was a counter used to determine that specific block's location in relation to other blocks.I manipulated linkCount to determine which block was to be evicted using the replacement algorithm, as described below:::
+
+FIFO:
+Basically, I increment the count variable every time I write something into the cache. Because this is a global variable (countR for no-prefetch and countP for prefetch), I am available to maintain it independent of the function. I change the linkCount part of cBlock to reflect the linkCount, and when it is time to evict I iterate through my cache to find the smallest linkCount and evict whichever cBlock it belongs to.
+
+LRU: 
+The only difference between the incrementing of linkCount is that I incremented when I had a hit as well. The cBlock with the SMALLEST linkCount will be the one that was accessed least recently, which I will then evict (if necessary) using the same mechanism as FIFO.
+
+(Side note: HUGE shout out to Jay for encouraging us to do the extra credit in lecture, because I wouldn't have done it if he hadn't emphasized that it's easier than it seems.) 
+
+Data Structures (2d array):
+
+I used a 2D array to store the blocks, because of the concept that we learned in class. A cache is made of sets, which is essentially an array of blocks, which is an array of bytes. Since the number of blocks per set is the associativity, I calculated the number of sets and then the associativity and used these two values (in a nested for loop with sets in the outer loop and assoc in the internal loop) to iterate through the cache to create it and iterate it both for the purposes of inserting and reading it.
+
+Prefetch's effect on cache hits/misses and on the number of memory reads:
+	In this assignment, all pre-fetch does is also access the memory address it's given plus the memory address within that memory address + "some value". In this assignment, that "some value" is blocksize. In class, we covered the three types of misses (conflic, cold, and capacity) and we learned that prefetch decreases all three of these types of misses in theory, although the actual number of misses it alleviates depends on the data you are given. Because it grabs the next block before it is accessed, pre-fetch attempts to predict the next action of the user. The total number of cache misses should decrease and the number of cache hits should increase. This is because pre-fetch may exploit the spacial locality feature of the cache. The memory write is the same, but the memory reads are increased. When pre-fetching, the program must also read the additional memory at address+blockSize, therefore increasing the aggregate amount of reads.
+	
+
